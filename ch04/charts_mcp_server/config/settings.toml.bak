@@ -1,3 +1,4 @@
+[default]
 # MCP服务器配置
 [mcp_server]
 host = "127.0.0.1"
@@ -22,14 +23,9 @@ temp_dir = "temp"
 [screenshot]
 viewport_width = 1024
 viewport_height = 768
-wait_time = 3000
+wait_time = 2000
 
 # 日志配置
 [logging]
-level = "DEBUG"
-format = "{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {file}:{line} | {message}"
-
-# 调试模式
-[debug]
-enabled = true
-verbose_errors = true
+level = "INFO"
+format = "{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {message}"

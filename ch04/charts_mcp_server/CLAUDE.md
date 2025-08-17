@@ -6,6 +6,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Development Setup
 ```bash
+# Activate virtual environment
+source charts_env/bin/activate
+
 # Install dependencies
 pip install -r requirements.txt
 

@@ -69,10 +69,16 @@ class ScreenshotTool:
                 
                 # 等待图表渲染完成（查找ECharts容器）
                 try:
-                    await page.wait_for_selector('[_echarts_instance_]', timeout=5000)
+                    # 等待ECharts实例创建
+                    await page.wait_for_selector('[_echarts_instance_]', timeout=10000)
+                    # 额外等待图表动画完成
+                    await asyncio.sleep(2)
                     logger.debug("ECharts图表已渲染完成")
                 except Exception:
-                    logger.warning("未检测到ECharts实例，继续截图")
+                    logger.warning("未检测到ECharts实例，尝试等待DOM加载完成")
+                    # 等待文档完全加载
+                    await page.wait_for_load_state('networkidle', timeout=5000)
+                    await asyncio.sleep(1)
                 
                 # 截图
                 await page.screenshot(
@@ -140,7 +146,7 @@ class ScreenshotTool:
         image_format: str = "png"
     ) -> Path:
         """
-        同步版本的HTML转图片方法
+        同步版本的HTML转图片方法，处理事件循环冲突
         
         Args:
             html_file_path: HTML文件路径
@@ -150,7 +156,20 @@ class ScreenshotTool:
         Returns:
             Path: 生成的图片文件路径
         """
-        return asyncio.run(self.html_to_image(html_file_path, output_path, image_format))
+        try:
+            # 检查是否已经在事件循环中运行
+            loop = asyncio.get_running_loop()
+            # 如果在事件循环中，不能使用asyncio.run()
+            # 需要用其他方式处理
+            import concurrent.futures
+            with concurrent.futures.ThreadPoolExecutor() as executor:
+                future = executor.submit(
+                    lambda: asyncio.run(self.html_to_image(html_file_path, output_path, image_format))
+                )
+                return future.result()
+        except RuntimeError:
+            # 没有运行的事件循环，可以安全使用asyncio.run
+            return asyncio.run(self.html_to_image(html_file_path, output_path, image_format))
 
 
 # 创建全局截图工具实例

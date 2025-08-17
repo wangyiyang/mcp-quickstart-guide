@@ -16,12 +16,10 @@ settings = Dynaconf(
         str(config_dir / "settings.toml"),
         str(config_dir / ".secrets.toml"),
     ],
-    # 环境设置
-    environments=True,
+    # 环境设置（关闭以避免配置问题）
+    environments=False,
     # 从环境变量加载
     load_dotenv=True,
-    # 包含配置文件
-    includes=["*.toml"],
 )
 
 # 导出配置实例

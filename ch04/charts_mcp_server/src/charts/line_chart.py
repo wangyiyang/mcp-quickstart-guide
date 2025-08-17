@@ -65,16 +65,19 @@ class LineChartGenerator:
             
             # 渲染HTML
             html_file = self._render_to_html(chart)
+            logger.debug(f"HTML文件已生成: {html_file}")
             
             # 转换为图片
             image_file = screenshot_tool.html_to_image_sync(html_file)
+            logger.debug(f"图片文件已生成: {image_file}")
             
             # 上传到MinIO并获取URL
             url = minio_client.upload_file(image_file)
             
-            # 清理临时文件
-            temp_manager.cleanup_file(html_file)
-            temp_manager.cleanup_file(image_file)
+            # 暂时不清理临时文件，用于调试
+            # temp_manager.cleanup_file(html_file)
+            # temp_manager.cleanup_file(image_file)
+            logger.info(f"调试信息 - HTML: {html_file}, 图片: {image_file}")
             
             logger.info(f"折线图生成成功: {title}")
             return url
@@ -186,23 +189,10 @@ class LineChartGenerator:
         return theme_mapping.get(theme.lower(), ThemeType.WHITE)
     
     def _build_global_options(self, title: str, chart_options: Dict[str, Any]) -> Dict[str, Any]:
-        """构建全局选项"""
+        """构建全局选项 - 简化版本"""
         options = {
             'title_opts': opts.TitleOpts(title=title),
-            'toolbox_opts': opts.ToolboxOpts(
-                feature=opts.ToolBoxFeatureOpts(
-                    save_as_image=opts.ToolBoxFeatureSaveAsImageOpts(),
-                    restore=opts.ToolBoxFeatureRestoreOpts(),
-                    data_view=opts.ToolBoxFeatureDataViewOpts(),
-                    data_zoom=opts.ToolBoxFeatureDataZoomOpts(),
-                    magic_type=opts.ToolBoxFeatureMagicTypeOpts(type_=["line", "bar"])
-                )
-            ),
-            'legend_opts': opts.LegendOpts(pos_left="center", pos_top="bottom"),
-            'datazoom_opts': [
-                opts.DataZoomOpts(range_start=0, range_end=100),
-                opts.DataZoomOpts(type_="inside", range_start=0, range_end=100)
-            ]
+            'legend_opts': opts.LegendOpts(pos_left="center", pos_top="bottom")
         }
         
         # 合并用户自定义选项
@@ -245,48 +235,13 @@ class LineChartGenerator:
                 axis_pointer_type="cross"
             )
         
-        # 添加网格配置
-        if 'grid' in chart_options:
-            grid_config = chart_options['grid']
-            options['grid_opts'] = opts.GridOpts(**grid_config)
-        else:
-            options['grid_opts'] = opts.GridOpts(
-                left="3%",
-                right="4%",
-                bottom="10%",
-                top="15%",
-                contain_label=True
-            )
-        
         return options
     
     def _render_to_html(self, chart: Line) -> Path:
         """将图表渲染为HTML文件"""
-        html_content = chart.render_embed()
-        
-        # 创建完整的HTML文档
-        full_html = f"""
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <meta charset="utf-8">
-            <title>Line Chart</title>
-            <style>
-                body {{
-                    margin: 0;
-                    padding: 20px;
-                    background-color: white;
-                }}
-            </style>
-        </head>
-        <body>
-            {html_content}
-        </body>
-        </html>
-        """
-        
-        # 保存为临时HTML文件
-        html_file = temp_manager.create_temp_html(full_html)
+        # 使用render()生成包含完整ECharts库的HTML
+        html_file = temp_manager.create_temp_file('.html')
+        chart.render(str(html_file))
         return html_file
 
 
