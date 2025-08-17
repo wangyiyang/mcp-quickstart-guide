@@ -1,0 +1,31 @@
+[default]
+# MCP服务器配置
+[mcp_server]
+host = "127.0.0.1"
+port = 8000
+path = "/mcp"
+
+# MinIO配置
+[minio]
+endpoint = "localhost:9000"
+bucket_name = "charts"
+secure = false
+url_expiry_hours = 24
+
+# 图表配置
+[charts]
+default_width = 800
+default_height = 600
+default_theme = "white"
+temp_dir = "temp"
+
+# 截图配置
+[screenshot]
+viewport_width = 1024
+viewport_height = 768
+wait_time = 2000
+
+# 日志配置
+[logging]
+level = "INFO"
+format = "{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {message}"

@@ -1,0 +1,20 @@
+# FastMCP - MCP服务器框架
+fastmcp>=2.3.0
+
+# 图表生成库
+pyecharts>=2.0.4
+
+# MinIO对象存储客户端
+minio>=7.2.0
+
+# 配置管理
+dynaconf>=3.2.0
+
+# 日志库
+loguru>=0.7.2
+
+# 截图依赖
+playwright>=1.40.0
+
+# 其他依赖
+pathlib2>=2.3.7; python_version < "3.4"
