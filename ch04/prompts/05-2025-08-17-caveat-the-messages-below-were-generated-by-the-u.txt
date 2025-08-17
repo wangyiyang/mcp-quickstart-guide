@@ -3,13 +3,13 @@
 │                                                                                                     │
 │   /help for help, /status for your current setup                                                    │
 │                                                                                                     │
-│   cwd: /Users/wangyiyang/Documents/Github/Article/02_MCP-Cookbook/mcp-guide/ch04/charts_mcp_server  │
+│   cwd: /mcp-guide/ch04/charts_mcp_server  │
 │                                                                                                     │
 │   ───────────────────────────────────────────────────────────────────────────────────────────────── │
 │                                                                                                     │
 │   Overrides (via env):                                                                              │
 │                                                                                                     │
-│   • API Base URL: https://sg.instcopilot-api.com                                                    │
+│   • API Base URL:                                                 │
 ╰─────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
 > /clear 

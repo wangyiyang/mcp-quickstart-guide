@@ -3,13 +3,13 @@
 │                                                                                                     │
 │   /help for help, /status for your current setup                                                    │
 │                                                                                                     │
-│   cwd: /Users/wangyiyang/Documents/Github/Article/02_MCP-Cookbook/mcp-guide/ch04/charts_mcp_server  │
+│   cwd: /mcp-guide/ch04/charts_mcp_server  │
 │                                                                                                     │
 │   ───────────────────────────────────────────────────────────────────────────────────────────────── │
 │                                                                                                     │
 │   Overrides (via env):                                                                              │
 │                                                                                                     │
-│   • API Base URL: https://sg.instcopilot-api.com                                                    │
+│   • API Base URL:                                                   │
 ╰─────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
 > /clear 
@@ -17,20 +17,20 @@
 
 > 我们启动遇到了问题:python main.py
   Traceback (most recent call last):
-    File "/Users/wangyiyang/Documents/Github/Article/02_MCP-Cookbook/mcp-guide/ch04/charts_mcp_server/main.py", line 20, in <module>
+    File "/mcp-guide/ch04/charts_mcp_server/main.py", line 20, in <module>
       from src.charts.bar_chart import bar_chart_generator
-    File "/Users/wangyiyang/Documents/Github/Article/02_MCP-Cookbook/mcp-guide/ch04/charts_mcp_server/src/charts/bar_chart.py", line 9, in <module>
+    File "/mcp-guide/ch04/charts_mcp_server/src/charts/bar_chart.py", line 9, in <module>
       from ..utils.temp_files import temp_manager
-    File "/Users/wangyiyang/Documents/Github/Article/02_MCP-Cookbook/mcp-guide/ch04/charts_mcp_server/src/utils/temp_files.py", line 111, in <module>
+    File "/mcp-guide/ch04/charts_mcp_server/src/utils/temp_files.py", line 111, in <module>
       temp_manager = TempFileManager()
                      ^^^^^^^^^^^^^^^^^
-    File "/Users/wangyiyang/Documents/Github/Article/02_MCP-Cookbook/mcp-guide/ch04/charts_mcp_server/src/utils/temp_files.py", line 17, in __init__
+    File "/mcp-guide/ch04/charts_mcp_server/src/utils/temp_files.py", line 17, in __init__
       self.temp_dir = PROJECT_ROOT / settings.charts.temp_dir
                                      ^^^^^^^^^^^^^^^
-    File "/Users/wangyiyang/Documents/Github/Article/02_MCP-Cookbook/mcp-guide/ch04/charts_mcp_server/charts_env/lib/python3.12/site-packages/dynaconf/base.py", line 145, in __getattr__
+    File "/mcp-guide/ch04/charts_mcp_server/charts_env/lib/python3.12/site-packages/dynaconf/base.py", line 145, in __getattr__
       value = getattr(self._wrapped, name)
               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    File "/Users/wangyiyang/Documents/Github/Article/02_MCP-Cookbook/mcp-guide/ch04/charts_mcp_server/charts_env/lib/python3.12/site-packages/dynaconf/base.py", line 328, in __getattribute__
+    File "/mcp-guide/ch04/charts_mcp_server/charts_env/lib/python3.12/site-packages/dynaconf/base.py", line 328, in __getattribute__
       return super().__getattribute__(name)
              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   AttributeError: 'Settings' object has no attribute 'CHARTS'
@@ -131,7 +131,7 @@
       from pathlib import Path…)
   ⎿  Config dir exists: True                                                                                                             
      Settings file exists: True
-     Settings file path: /Users/wangyiyang/Documents/Github/Article/02_MCP-Cookbook/mcp-guide/ch04/charts_mcp_server/config/settings.toml
+     Settings file path: /mcp-guide/ch04/charts_mcp_server/config/settings.toml
      … +17 lines (ctrl+r to expand)
 
 ⏺ 问题找到了！在 TOML 文件中，有一个 [default] 环境节，但配置项直接在顶层定义。这样会导致 Dynaconf 无法正确解析。我需要修复配置文件结构：
@@ -193,7 +193,7 @@
 
 ⏺ BashOutput(Reading shell output)
   ⎿  Traceback (most recent call last):                                                                                                
-       File "/Users/wangyiyang/Documents/Github/Article/02_MCP-Cookbook/mcp-guide/ch04/charts_mcp_server/main.py", line 15, in <module>
+       File "/mcp-guide/ch04/charts_mcp_server/main.py", line 15, in <module>
          from fastmcp import FastMCP, Context
      … +1 line (ctrl+r to expand)
 
@@ -266,7 +266,7 @@
 
 ⏺ BashOutput(Reading shell output)
   ⎿  Traceback (most recent call last):                                                                                                
-       File "/Users/wangyiyang/Documents/Github/Article/02_MCP-Cookbook/mcp-guide/ch04/charts_mcp_server/main.py", line 20, in <module>
+       File "/mcp-guide/ch04/charts_mcp_server/main.py", line 20, in <module>
          from src.charts.bar_chart import bar_chart_generator
      … +15 lines (ctrl+r to expand)
 
@@ -276,10 +276,10 @@
       from src.config import settings…)
   ⎿  Error: Traceback (most recent call last):
        File "<string>", line 6, in <module>
-       File "/Users/wangyiyang/Documents/Github/Article/02_MCP-Cookbook/mcp-guide/ch04/charts_mcp_server/charts_env/lib/python3.12/site-packages/dynaconf/base.py", line 145, in __getattr__
+       File "/mcp-guide/ch04/charts_mcp_server/charts_env/lib/python3.12/site-packages/dynaconf/base.py", line 145, in __getattr__
          value = getattr(self._wrapped, name)
                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-       File "/Users/wangyiyang/Documents/Github/Article/02_MCP-Cookbook/mcp-guide/ch04/charts_mcp_server/charts_env/lib/python3.12/site-packages/dynaconf/base.py", line 328, in __getattribute__
+       File "/mcp-guide/ch04/charts_mcp_server/charts_env/lib/python3.12/site-packages/dynaconf/base.py", line 328, in __getattribute__
          return super().__getattribute__(name)
                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
      AttributeError: 'Settings' object has no attribute 'CHARTS'
@@ -290,7 +290,7 @@
 
 ⏺ Bash(source charts_env/bin/activate && python -c "
       import os…)
-  ⎿  Current working directory: /Users/wangyiyang/Documents/Github/Article/02_MCP-Cookbook/mcp-guide/ch04/charts_mcp_server
+  ⎿  Current working directory: /mcp-guide/ch04/charts_mcp_server
      Config directory exists: True
      Settings file exists: True
      … +24 lines (ctrl+r to expand)
@@ -299,7 +299,7 @@
 
 ⏺ Bash(source charts_env/bin/activate && python -c "
       # Test direct file loading…)
-  ⎿  Loading config from: /Users/wangyiyang/Documents/Github/Article/02_MCP-Cookbook/mcp-guide/ch04/charts_mcp_server/config/settings.toml
+  ⎿  Loading config from: /mcp-guide/ch04/charts_mcp_server/config/settings.toml
      Config file updated successfully
 
 ⏺ 现在再次测试配置：
@@ -308,10 +308,10 @@
       from src.config import settings…)
   ⎿  Error: Traceback (most recent call last):
        File "<string>", line 4, in <module>
-       File "/Users/wangyiyang/Documents/Github/Article/02_MCP-Cookbook/mcp-guide/ch04/charts_mcp_server/charts_env/lib/python3.12/site-packages/dynaconf/base.py", line 145, in __getattr__
+       File "/mcp-guide/ch04/charts_mcp_server/charts_env/lib/python3.12/site-packages/dynaconf/base.py", line 145, in __getattr__
          value = getattr(self._wrapped, name)
                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-       File "/Users/wangyiyang/Documents/Github/Article/02_MCP-Cookbook/mcp-guide/ch04/charts_mcp_server/charts_env/lib/python3.12/site-packages/dynaconf/base.py", line 328, in __getattribute__
+       File "/mcp-guide/ch04/charts_mcp_server/charts_env/lib/python3.12/site-packages/dynaconf/base.py", line 328, in __getattribute__
          return super().__getattribute__(name)
                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
      AttributeError: 'Settings' object has no attribute 'CHARTS'
@@ -327,8 +327,8 @@
 
 ⏺ Bash(source charts_env/bin/activate && python -c "
       from dynaconf import Dynaconf…)
-  ⎿  PROJECT_ROOT: /Users/wangyiyang/Documents/Github/Article/02_MCP-Cookbook/mcp-guide/ch04/charts_mcp_server     
-     config_dir: /Users/wangyiyang/Documents/Github/Article/02_MCP-Cookbook/mcp-guide/ch04/charts_mcp_server/config
+  ⎿  PROJECT_ROOT: /mcp-guide/ch04/charts_mcp_server     
+     config_dir: /mcp-guide/ch04/charts_mcp_server/config
      settings file exists: True
      … +29 lines (ctrl+r to expand)
 
@@ -357,13 +357,13 @@
       from src.config import settings…)
   ⎿  Error: Traceback (most recent call last):
        File "<string>", line 5, in <module>
-       File "/Users/wangyiyang/Documents/Github/Article/02_MCP-Cookbook/mcp-guide/ch04/charts_mcp_server/charts_env/lib/python3.12/site-packages/dynaconf/utils/boxing.py", line 18, in evaluate
+       File "/mcp-guide/ch04/charts_mcp_server/charts_env/lib/python3.12/site-packages/dynaconf/utils/boxing.py", line 18, in evaluate
          value = f(dynabox, item, *args, **kwargs)
                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-       File "/Users/wangyiyang/Documents/Github/Article/02_MCP-Cookbook/mcp-guide/ch04/charts_mcp_server/charts_env/lib/python3.12/site-packages/dynaconf/utils/boxing.py", line 41, in __getattr__
+       File "/mcp-guide/ch04/charts_mcp_server/charts_env/lib/python3.12/site-packages/dynaconf/utils/boxing.py", line 41, in __getattr__
          return super().__getattr__(n_item, *args, **kwargs)
                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-       File "/Users/wangyiyang/Documents/Github/Article/02_MCP-Cookbook/mcp-guide/ch04/charts_mcp_server/charts_env/lib/python3.12/site-packages/dynaconf/vendor/box/box.py", line 176, in __getattr__
+       File "/mcp-guide/ch04/charts_mcp_server/charts_env/lib/python3.12/site-packages/dynaconf/vendor/box/box.py", line 176, in __getattr__
          raise BoxKeyError(str(E))from _A
      … +4 lines (ctrl+r to see all)
 
